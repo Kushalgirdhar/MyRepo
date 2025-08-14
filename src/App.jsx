@@ -1,23 +1,26 @@
-import { useState } from "react";
-import Counter2 from "./Counter2";
-
-function App(){
-  const [count,setCount]=useState(0);
-  const [data,setData]=useState(0);
-  const [display,setDisplay]=useState(true);
-
+import { useActionState } from "react";
+export default function App(){
+  const handleSubmit=(previousData,formData)=>{
+    let name=formData.get('name');
+    let password=formData.get('password')
+    console.log("handleSubmit called",name,password);    
+  }
+  const[data,action,pending]=useActionState(handleSubmit,undefined)
   return(
+    <>
     <div>
-
-    {
-      display? <Counter2 count={count} data={data}/>:null
-    }
-      <button onClick={()=>setCount(count+1)}>Counter</button>
-      <button onClick={()=>setData(data+1)}>Data</button>
-      <button onClick={()=>setDisplay(!display)}>Toggle</button>
+      <h1>UseActionState Hook in React Js</h1>
+      <form action={action}>
+        <input type="text" placeholder="enter name" name="name"/>
+        <br /><br />
+        <input type="password" placeholder="enter Password" name="password" />
+        <br /><br />
+        <button>Submit Data</button>
+      </form>
     </div>
+
+    </>
+
+
   )
-
-
 }
-export default App
